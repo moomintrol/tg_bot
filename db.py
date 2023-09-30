@@ -113,8 +113,3 @@ def searchSubUser(user_id):
 def seacrCategory():
     return cursor.execute('''SELECT * FROM categories
     ''',()).fetchall()
-
-def addCategories():
-    addCategory("business", "Бизнес")
-    addCategory("sports", "Спорт")
-    addCategory("science", "Наука")

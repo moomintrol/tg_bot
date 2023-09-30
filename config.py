@@ -1,1 +1,2 @@
 news_key='d0fd84f4e1524add8beba96704dbb2dd'
+categoryes = [["business", "Бизнес"],["sports", "Спорт"],["science", "Наука"],["health", "Здроровье"],["entertainmen", "Развлечение"],["general","Общие"],["technology","Технологии"]]

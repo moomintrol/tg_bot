@@ -7,7 +7,10 @@ from config import *
 bot = telebot.TeleBot('6457363779:AAELG42XUptfOeQuM_D-onCeSfrGIO6jKNo')
 newsapi = NewsApiClient(api_key=news_key)
 if len(seacrCategory()) == 0:
-    addCategories()
+    i = 0
+    while i < len(categoryes):
+        addCategory(categoryes[i][0], categoryes[i][1])
+        i = i + 1
 
 @bot.message_handler(commands=['start'])
 def start(message):
@@ -65,14 +68,20 @@ def get_text_messages(message):
         tg_id = message.from_user.id
         user_id = str(searchUserId(tg_id)[0])
         userSub = searchSubUser(user_id)
+        subs = ""
+        s = ''.join(''.join(map(str,userSub)))
         i = 0
         while i < len(userSub):
+            subs += f"- {str(userSub[i][0])} \n"
             name = types.KeyboardButton("Отписаться от " + ''.join(userSub[i]))
             markup.add(name)
             i = i + 1
         back = types.KeyboardButton('Назад')
         markup.add(back)
-        bot.reply_to(message, "Ваши подписки:", reply_markup=markup)
+        if len(userSub) > 0:
+            bot.reply_to(message, f"Ваши подписки:\n{subs}", reply_markup=markup)
+        else:
+            bot.reply_to(message, "У вас ещё нет подписок", reply_markup=markup)
 
     elif message.text.startswith("Отписаться"):
         tg_id = message.from_user.id
@@ -116,7 +125,10 @@ def get_text_messages(message):
             i = i + 1
         back = types.KeyboardButton('Назад')
         markup.add(back)
-        bot.reply_to(message, "Новости по вашим подпискам:", reply_markup=markup)
+        if len(userSub) > 0:
+            bot.reply_to(message, "Новости по вашим подпискам:", reply_markup=markup)
+        else:
+            bot.reply_to(message, "Подпишитесь, чтобы читать новости", reply_markup=markup)
 
     elif message.text.startswith("Посмотреть"):
         tg_id = message.from_user.id
